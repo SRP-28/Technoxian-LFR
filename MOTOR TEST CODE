@@ -1,0 +1,53 @@
+// ==========================================
+// Raspberry Pi Pico / RP2040
+// DRV8833 - Spin Both Motors Forward
+// TT Motors / No Encoder
+// ==========================================
+
+// Motor A pins
+const int AIN1 = 5;
+const int AIN2 = 0;
+
+// Motor B pins
+const int BIN1 = 4;
+const int BIN2 = 3;
+
+// Speed: 0 to 255
+const int MOTOR_SPEED = 180;
+
+void stopMotors() {
+  analogWrite(AIN1, 0);
+  digitalWrite(AIN2, LOW);
+
+  analogWrite(BIN1, 0);
+  digitalWrite(BIN2, LOW);
+}
+
+void spinForward(int speedVal) {
+  speedVal = constrain(speedVal, 0, 255);
+
+  analogWrite(AIN1, speedVal);
+  digitalWrite(AIN2, LOW);
+
+  analogWrite(BIN1, speedVal);
+  digitalWrite(BIN2, LOW);
+}
+
+void setup() {
+  pinMode(AIN1, OUTPUT);
+  pinMode(AIN2, OUTPUT);
+  pinMode(BIN1, OUTPUT);
+  pinMode(BIN2, OUTPUT);
+
+  analogWriteRange(255);
+  analogWriteFreq(20000);
+
+  stopMotors();
+  delay(1000);
+
+  spinForward(MOTOR_SPEED);
+}
+
+void loop() {
+  // Motors keep spinning
+}
